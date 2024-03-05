@@ -561,9 +561,9 @@
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               <li>
-                <a href="{% url 'customer_list' %}" style="text-decoration: none;">
-                    <i class="bi bi-list-task" style="font-size:12px;"></i><span>Customers List</span>
-                </a>
+                <a href="{% url 'get_customer_invoice_data' %}" id="customers-link" style="text-decoration: none;">
+                  <i class="bi bi-list-task" style="font-size:12px;"></i><span>Customers List</span>
+              </a>
               </li>
               <li>
                 <a href="{% url 'createcustomer' %}" style="text-decoration: none;">
@@ -574,24 +574,26 @@
                 
             </ul>
           </li><!-- End Components Nav -->
-    
+
+      
           <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-receipt"></i><span>Invoice</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               <li>
-                <a href="{% url 'invoicelist' %}" style="text-decoration: none;">
-                    <i class="bi bi-list-task" style="font-size:12px;"></i><span>Invoice List</span>
+                <a href="#invoice" id="invoices-link" style="text-decoration: none;">
+                  <i class="bi bi-list-task" style="font-size:12px;"></i><span>Invoice List</span>
                 </a>
               </li>
               <li>
-                <a href="{% url 'invoice_create' %}" style="text-decoration: none;">
+                <a href="" style="text-decoration: none;">
                   <i class="bi bi-circle"></i><span>Create Invoice</span>
                 </a>
               </li>
              
         </ul>
+        
     
     </aside>
     <main id="main" class="main">
@@ -662,9 +664,14 @@
     
           </div>
         </section>
+      
     
     </main>
-
- 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+      
+    
+     
+  
 </body>
 </html>

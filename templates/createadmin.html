@@ -509,181 +509,201 @@
 
 
 <body >
-    <header id="header" class="header fixed-top d-flex align-items-center">
-  
-        <div class="d-flex align-items-center justify-content-between">
-          <a href="{% url 'adminportal' %}" class="logo d-flex align-items-center">
-            <img src="{% static 'images/admin.jpg' %}" alt="">
-            <span class="d-none d-lg-block"></span>
-          </a>
-          {% comment %} <i class="bi bi-list toggle-sidebar-btn"></i> {% endcomment %}
-        </div>
-        <nav class="header-nav ms-auto">
-            <ul class="d-flex align-items-center">
-      
-              <li class="nav-item d-block d-lg-none">
-                <a class="nav-link nav-icon search-bar-toggle " href="#">
-                  <i class="bi bi-search"></i>
-                </a>
-              </li><!-- End Search Icon-->
-    
-                
-      
-              <li class="nav-item dropdown pe-3">
-      
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                  <img src="{% static 'images/admonpro.jpg' %}" alt="Profile" class="rounded-circle">
-                  <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
-                </a><!-- End Profile Iamge Icon -->
-      
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                  <li class="dropdown-header">
-                    <h6></h6>
-                 
-                  <li>
-                    <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">
-                      <i class="bi bi-box-arrow-right"></i>
-                      <span>Sign Out</span>
-                    </a>
-                  </li>
-      
-                </ul><!-- End Profile Dropdown Items -->
-              </li><!-- End Profile Nav -->
-      
-            </ul>
-          </nav>
-    </header>
-    <aside id="sidebar" class="sidebar">
-
-        <ul class="sidebar-nav" id="sidebar-nav">
-    
-          <li class="nav-item">
-            <a class="nav-link " href="{% url 'adminportal' %}">
-              <i class="bi bi-grid"></i>
-              <span>Dashboard</span>
-            </a>
-          </li><!-- End Dashboard Nav --> 
-    
-          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person-circle"></i><span>Customer</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-              <li>
-                <a href="{% url 'customer_list' %}" style="text-decoration: none;">
-                    <i class="bi bi-list-task" style="font-size:12px;"></i><span>Customers List</span>
-                </a>
-              </li>
-              <li>
-                <a href="{% url 'createcustomer' %}" style="text-decoration: none;">
-                  <i class="bi bi-circle"></i><span>Create Customers</span>
-                </a>
-              </li>
-              <li>
-                
-            </ul>
-          </li><!-- End Components Nav -->
-    
-          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-receipt"></i><span>Invoice</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-              <li>
-                <a href="{% url 'invoicelist' %}" style="text-decoration: none;">
-                    <i class="bi bi-list-task" style="font-size:12px;"></i><span>Invoice List</span>
-                </a>
-              </li>
-              <li>
-                <a href="{% url 'invoice_create' %}" style="text-decoration: none;">
-                  <i class="bi bi-circle"></i><span>Create Invoice</span>
-                </a>
-              </li>
-             
-        </ul>
-    
-    </aside>
+  <section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;width: 130%;height:110%; margin-left:80px;">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Create Customer</h3>
     
         
+                <form method="POST"  action="{% url 'customer_and_invoice_view' %}" enctype="multipart/form-data" novalidate id="customerForm">
+                  {% csrf_token %}
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <input type="text" id="firstName" name="firstName" class="form-control form-control-lg border-secondary" placeholder="First Name" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <input type="text" id="lastName" name="lastName" class="form-control form-control-lg border-secondary" placeholder="Last Name" required />
+                        </div>
+                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-4 d-flex align-items-center">
+                                    <div class="form-outline datepicker w-100">
+                                        <input type="text" class="form-control form-control-lg border-secondary" name="custid" value="C00{{tot_cust}}" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <input type="email" id="emailAddress" name="emailAddress" class="form-control form-control-lg border-secondary" placeholder="EmailId" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control form-control-lg border-secondary" placeholder="Phone Number" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <input style="color: black;background-color: white;" class="form-control form-control-lg border-secondary" type="text" name="address" id="bill_address" placeholder="Address">
+                                </div>
+                            </div>
+
+                            <center><div class="mt-4 pt-2">
+                              <input class="btn btn-primary btn-lg" type="submit" value="Save" />
+                            </div></center>
+
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<div></div>
     <section class="vh-100 gradient-custom">
-        <div class="container py-5 h-100">
-          <div class="row justify-content-center align-items-center h-100">
-            <div class="col-12 col-lg-9 col-xl-7">
-              <div class="card shadow-2-strong card-registration" style="border-radius: 15px;width: 100%; margin-left:160px;">
-                <div class="card-body p-4 p-md-5">
-                  <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Create Customer</h3>
-                  <form method="POST" action="{% url 'customer_create' %}" enctype="multipart/form-data" novalidate id="forms"> 
-                    {% csrf_token %}
-                    <div class="row">
-                      <div class="col-md-6 mb-4">
-      
-                        <div class="form-outline">
-                          <input type="text" id="firstName" name="firstName" class="form-control form-control-lg border-secondary"  placeholder="First Name" required />
-                          {% comment %} <label class="form-label" for="firstName">First Name</label> {% endcomment %}
-                        </div>
-      
-                      </div>
-                      <div class="col-md-6 mb-4">
-      
-                        <div class="form-outline">
-                          <input type="text" id="lastName" name="lastName" class="form-control form-control-lg border-secondary" placeholder="Last Name" required/>
-                          {% comment %} <label class="form-label" for="lastName">Last Name</label> {% endcomment %}
-                        </div>
-      
-                      </div>
-                    </div>
-      
-                    <div class="row">
-                      <div class="col-md-12 mb-4 d-flex align-items-center">
-      
-                        <div class="form-outline datepicker w-100">
-                          <input type="text" class="form-control form-control-lg border-secondary" name="custid" value="C00{{tot_cust}}" readonly  />
-                          {% comment %} <label for="Customerid" class="form-label">Customer ID</label> {% endcomment %}
-                        </div>
-      
-                      </div>
-                    
-                    <div class="row">
-                      <div class="col-md-6 mb-4 pb-2">
-      
-                        <div class="form-outline">
-                          <input type="email" id="emailAddress" name="emailAddress" class="form-control form-control-lg border-secondary" placeholder="EmailId" />
-                          {% comment %} <label class="form-label" for="emailAddress">Email</label> {% endcomment %}
-                        </div>
-      
-                      </div>
-                      <div class="col-md-6 mb-4 pb-2">
-      
-                        <div class="form-outline">
-                          <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control form-control-lg border-secondary" placeholder="Phone Number" />
-                          {% comment %} <label class="form-label" for="phoneNumber">Phone Number</label> {% endcomment %}
-                        </div>
-      
-                      </div>
-                    </div>
-      
-                    <div class="row">
-                      <div class="col-12">
-      
-                        <input style="color: black;background-color: white;" class="form-control form-control-lg border-secondary" type="text"  name="address" id="bill_address" placeholder="Address">
-                        {% comment %} <label class="form-label" for="Address">Address</label> {% endcomment %}
+      <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+          <div class="col-12 col-lg-9 col-xl-7">
+            <div class="card shadow-2-strong card-registration" style="border-radius: 15px;width: 130%;height:110%; margin-left:80px;">
+              <div class="card-body p-4 p-md-5">
+                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Create Invoice</h3>
+                <form method="POST"  enctype="multipart/form-data" novalidate id="invoiceForm">
+                 
+                  <div class="row">
+                    <div class="col-md-6 mb-4">
     
+                      <div class="form-outline">
+                        <select name="custname" id="customerSelect" class="form-control form-control-lg">
+                              <option value="" selected hidden>Select A Customer</option>
+                              {% for c in cust%}
+                              <option value="{{c.id}}">{{c.first_name }} {{ c.last_name }}</option>
+                              {% endfor %}
+
+                         </select>
+                        {% comment %} <label class="form-label" for="firstName">Customer Name</label> {% endcomment %}
                       </div>
+    
                     </div>
-      
-                    <center><div class="mt-4 pt-2">
-                      <input class="btn btn-primary btn-lg" type="submit" value="Save" />
-                    </div></center>
-      
-                  </form>
-                </div>
+                  
+                    <div class="col-md-6 mb-4 pb-2">
+    
+                      <div class="form-outline  w-100">
+                        <input type="text" class="form-control form-control-lg" name="invid" value="INV{{invoice}}" readonly />
+                        {% comment %} <label for="Customerid" class="form-label"> ID</label> {% endcomment %}
+                      </div>
+    
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-6 mb-4 pb-2">
+    
+                      <div class="form-outline">
+                        <input type="date" id="date" name="date" class="form-control form-control-lg" />
+                        {% comment %} <label class="form-label" for="date">Date</label> {% endcomment %}
+                      </div>
+    
+                    </div>
+                    <div class="col-md-6 mb-4 pb-2">
+    
+                      <div class="form-outline">
+                        <input type="number" id="amount" name="Amount" class="form-control form-control-lg"  placeholder="Amount"/>
+                        {% comment %} <label class="form-label" for="Amount">Amount</label> {% endcomment %}
+                      </div>
+    
+                    </div>
+                  </div>
+    
+                  <div class="row">
+                    <div class="col-12">
+    
+                      <select name="status"  class="form-control form-control-lg" placeholder="status">
+                          <option value="" selected hidden>Select a Status</option>
+                          <option value="Unpaid">Unpaid</option>
+                          <option value="Paid">Paid</option>
+                          <option value="Cancelled">Cancelled</option>
+                      </select>
+                      {% comment %} <label class="form-label" for="status">Status</label> {% endcomment %}
+    
+                    </div>
+                  </div>
+    
+                  <center><div class="mt-4 pt-2">
+                    <input class="btn btn-primary btn-lg" type="submit" value="Save" />
+                  </div></center>
+    
+                </form>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    
-    
+      </div>
+  </section>
+
+  <div id="message"></div>
+  <script>
+   // Event listener for customer form submission
+document.getElementById('customerForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  // Send POST request to API endpoint
+  fetch('/customer_and_invoice_view/', {
+      method: 'POST',
+      body: new FormData(this) // Send customer form data as FormData
+  })
+  .then(response => response.json()) // Parse response as JSON
+  .then(data => {
+      // Handle success or error response
+      if (data.message) {
+          document.getElementById('message').innerText = data.message;
+          // If customer added successfully, fetch customers again to update the dropdown
+          fetchCustomers();
+      } else if (data.errors) {
+          document.getElementById('message').innerText = 'Error: ' + JSON.stringify(data.errors);
+      }
+  })
+  .catch(error => {
+      console.error('Error adding customer:', error);
+      document.getElementById('message').innerText = 'An error occurred while adding the customer.';
+  });
+});
+
+// Event listener for invoice form submission
+document.getElementById('invoiceForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  // Send POST request to API endpoint
+  fetch('/customer_and_invoice_view/', {
+      method: 'POST',
+      body: new FormData(this) // Send invoice form data as FormData
+  })
+  .then(response => response.json()) // Parse response as JSON
+  .then(data => {
+      // Handle success or error response
+      if (data.message) {
+          document.getElementById('message').innerText = data.message;
+      } else if (data.errors) {
+          document.getElementById('message').innerText = 'Error: ' + JSON.stringify(data.errors);
+      }
+  })
+  .catch(error => {
+      console.error('Error adding invoice:', error);
+      document.getElementById('message').innerText = 'An error occurred while adding the invoice.';
+  });
+});
+
+  </script>
+  
 </body>
 </html>
 

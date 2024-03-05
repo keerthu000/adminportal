@@ -512,15 +512,15 @@
 
 
 <body >
-    <header id="header" class="header fixed-top d-flex align-items-center">
+    {% comment %} <header id="header" class="header fixed-top d-flex align-items-center">
   
         <div class="d-flex align-items-center justify-content-between">
           <a href="{% url 'adminportal' %}" class="logo d-flex align-items-center">
             <img src="{% static 'images/admin.jpg' %}" alt="">
             <span class="d-none d-lg-block"></span>
-          </a>
+          </a> {% endcomment %}
           {% comment %} <i class="bi bi-list toggle-sidebar-btn"></i> {% endcomment %}
-        </div>
+        {% comment %} </div>
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
       
@@ -605,9 +605,9 @@
              
         </ul>
     
-    </aside>
+    </aside> {% endcomment %}
 
-    <main id="main" class="main">
+    {% comment %} <main id="main" class="main">
 
         <div class="pagetitle">
           <h1>Customers Details</h1>
@@ -619,12 +619,12 @@
             
        
         </div>
-    </main>
+    </main> {% endcomment %}
     
     <div class="container" style="margin-left:300px;">
       
         <div style="margin-top: 60px; overflow-y: hidden;">
-            <table class="table table-bordered table-info table-striped table-responsive w-100" style="font-size: 14px;">
+          <table class="table table-bordered table-info table-striped table-responsive w-100" style="font-size: 14px;" id="customer-table">
                 <thead>
                     <tr>
                         <th scope="col" style="width: 5%; font-size: 14px">#</th>
@@ -637,7 +637,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for c in cust %}
+                    {% for c in customers %}
                     <tr>
                         <td style="width: 5%; font-size: 14px">{{ forloop.counter }}</td>
                         <td style="width: 12%; font-size: 14px">{{ c.first_name }} {{ c.last_name }}</td>
@@ -653,7 +653,91 @@
             
         </div>
     </div>
+    <div class="container" style="margin-left:300px;">
+      <div style="margin-top: 60px; overflow-y: hidden;">
+        <table class="table table-bordered table-info table-striped table-responsive w-100" style="font-size: 14px;" id="invoice-table">
+
+              <thead>
+                  <tr>
+                      <th scope="col" style="width: 3%; font-size: 14px">#</th>
+                      <th scope="col" style="width: 12%; font-size: 14px">Customer Name</th>
+                      <th scope="col" style="width: 12%; font-size: 14px">Invoice ID</th>
+                      <th scope="col" style="width: 12%; font-size: 14px">Date</th>
+                      <th scope="col" style="width: 12%; font-size: 14px">Amount</th>
+                      <th scope="col" style="width: 12%; font-size: 14px">Status</th>
+                      <th scope="col" style="width: 10%; font-size: 14px">Action</th>
+                      
+                      
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for i in invoices %}
+                  <tr>
+                      <td style="width: 3%; font-size: 14px">{{ forloop.counter }}</td>
+                      <td style="width: 12%; font-size: 14px">{{ i.customername.first_name}}{{ i.customername.last_name }}</td>
+                      <td style="width: 12%; font-size: 14px">{{ i.invoice_id }}</td>
+                      <td style="width: 12%; font-size: 14px">{{ i.date }}</td>
+                      <td style="width: 12%; font-size: 14px">{{ i.amount }}</td>
+                      <td style="width: 12%; font-size: 14px">{{ i.status }}</td>
+                      <td style="width: 12%; font-size: 14px"><a class="btn btn-outline-primary me-md-2" href="{% url 'editinvoice' i.id %}" role="button">Edit invoice</a></td>
+                      
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+
+
     
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Make AJAX request to fetch customer and invoice data
+        $.ajax({
+            url: '/api/data', // Your API endpoint
+            type: 'GET',
+            success: function(response) {
+                var customers = response.customers;
+                var invoices = response.invoices;
+    
+                // Populate customer table
+                var customerTable = $('#customer-table tbody');
+                customers.forEach(function(customer) {
+                    customerTable.append(`
+                        <tr>
+                            <td>${customer.id}</td>
+                            <td>${customer.name}</td>
+                            <td>${customer.email}</td>
+                            <td>${customer.phone}</td>
+                            <td>${customer.address}</td>
+                            <td><a href="#">Action</a></td>
+                        </tr>
+                    `);
+                });
+    
+                // Populate invoice table
+                var invoiceTable = $('#invoice-table tbody');
+                invoices.forEach(function(invoice) {
+                    invoiceTable.append(`
+                        <tr>
+                            <td>${invoice.id}</td>
+                            <td>${invoice.customer}</td>
+                            <td>${invoice.date}</td>
+                            <td>${invoice.amount}</td>
+                            <td>${invoice.status}</td>
+                            <td><a href="#">Action</a></td>
+                        </tr>
+                    `);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    });
+    </script>
     
     
 </body>
